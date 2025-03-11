@@ -1,8 +1,8 @@
-#updated
 import streamlit as st
 import pandas as pd
 import joblib
 from sklearn.preprocessing import StandardScaler
+import os
 
 # Load the trained model
 model = joblib.load("trained_model.pkl")
@@ -69,14 +69,20 @@ def home():
     # Image card with button
     st.markdown("""
     <div style="background-color: black; padding: 20px; border-radius: 10px; text-align: center;">
-        <img src="loan.jpg" alt="Loan Approval" style="width: 100%; max-width: 300px; border-radius: 10px;">
-        <br><br>
-        <a href="#" class="btn btn-primary" style="background-color: #007bff; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Check Your Loan Eligibility</a>
-    </div>
     """, unsafe_allow_html=True)
+    
+    # Check if the image file exists
+    if os.path.exists("loan.jpg"):
+        st.image("loan.jpg", use_container_width=True)
+    else:
+        st.error("Image file 'loan.jpg' not found.")
     
     if st.button("Check Your Loan Eligibility"):
         st.session_state.page = "Loan Approval"
+    
+    st.markdown("""
+    </div>
+    """, unsafe_allow_html=True)
 
 # Function for the About Us page
 def about_us():
